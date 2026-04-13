@@ -3,6 +3,7 @@ import { build, context } from "esbuild";
 
 const watchMode = process.argv.includes("--watch");
 const targetBrowser = process.argv.includes("--firefox") ? "firefox" : "chrome";
+const outputFormat = targetBrowser === "firefox" ? "iife" : "esm";
 
 const buildConfig = {
   entryPoints: {
@@ -14,7 +15,7 @@ const buildConfig = {
   },
   outdir: "dist",
   bundle: true,
-  format: "esm",
+  format: outputFormat,
   target: targetBrowser === "firefox" ? "firefox121" : "chrome120",
   sourcemap: true,
   platform: "browser",
@@ -27,6 +28,12 @@ async function adjustManifestForTarget() {
   const manifest = JSON.parse(manifestRaw);
 
   if (targetBrowser === "firefox") {
+    const serviceWorker = manifest.background?.service_worker ?? "background.js";
+
+    manifest.background = {
+      scripts: [serviceWorker]
+    };
+
     manifest.permissions = (manifest.permissions ?? []).filter((permission) => permission !== "sidePanel");
     delete manifest.side_panel;
     manifest.browser_specific_settings = {
