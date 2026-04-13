@@ -9,6 +9,26 @@ const mappingList = document.querySelector<HTMLUListElement>("#mappingList");
 const feedback = document.querySelector<HTMLParagraphElement>("#feedback");
 const openModeSelect = document.querySelector<HTMLSelectElement>("#openModeSelect");
 
+function hasSidePanelSupport(): boolean {
+  return typeof chrome.sidePanel !== "undefined";
+}
+
+function enforceBrowserCapabilities(): void {
+  if (!openModeSelect) {
+    return;
+  }
+
+  const sidePanelOption = openModeSelect.querySelector<HTMLOptionElement>("option[value='sidepanel']");
+  if (!sidePanelOption) {
+    return;
+  }
+
+  if (!hasSidePanelSupport()) {
+    sidePanelOption.disabled = true;
+    sidePanelOption.textContent = "Side Panel (not supported in this browser)";
+  }
+}
+
 function setFeedback(message: string, isError = false): void {
   if (!feedback) {
     return;
@@ -90,7 +110,16 @@ async function loadSessionConfig(): Promise<void> {
   }
 
   if (openModeSelect) {
-    openModeSelect.value = response.data.defaultOpenMode;
+    const supportsSidePanel = hasSidePanelSupport();
+    const desiredMode = response.data.defaultOpenMode;
+    const mode = !supportsSidePanel && desiredMode === "sidepanel" ? "tab" : desiredMode;
+
+    openModeSelect.value = mode;
+
+    if (mode !== desiredMode) {
+      await handleOpenModeChange(mode);
+      setFeedback("Side panel is not supported in this browser. Switched to Tab mode.");
+    }
   }
 }
 
@@ -139,5 +168,6 @@ openModeSelect?.addEventListener("change", () => {
   void handleOpenModeChange(mode);
 });
 
+enforceBrowserCapabilities();
 void refreshMappings();
 void loadSessionConfig();
