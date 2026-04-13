@@ -1,0 +1,72 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f3f6fb;
+  color: #10233d;
+}
+
+.container {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(16, 35, 61, 0.08);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input,
+select,
+button {
+  margin-top: 6px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #c8d4e6;
+  box-sizing: border-box;
+}
+
+button {
+  background: #0064d4;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#mappingList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#mappingList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e3ebf7;
+  padding: 10px 0;
+}
+
+#mappingList li button {
+  width: auto;
+  padding: 6px 10px;
+  background: #d64545;
+}
+
+#feedback {
+  min-height: 20px;
+  font-weight: 600;
+}

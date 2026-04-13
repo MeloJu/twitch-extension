@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YT Twitch Bridge - Settings</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Channel Mapping</h1>
+      <form id="mappingForm" class="card">
+        <label>
+          YouTube Channel Id or Handle
+          <input id="youtubeChannelId" required placeholder="@mychannel" />
+        </label>
+        <label>
+          Twitch Channel
+          <input id="twitchChannelName" required placeholder="mytwitchchannel" />
+        </label>
+        <button type="submit">Save Mapping</button>
+      </form>
+
+      <section class="card">
+        <h2>Default Open Mode</h2>
+        <select id="openModeSelect">
+          <option value="tab">Tab</option>
+          <option value="sidepanel">Side Panel</option>
+        </select>
+      </section>
+
+      <section class="card">
+        <h2>Saved Mappings</h2>
+        <ul id="mappingList"></ul>
+      </section>
+
+      <p id="feedback"></p>
+    </main>
+    <script type="module" src="./options.js"></script>
+  </body>
+</html>

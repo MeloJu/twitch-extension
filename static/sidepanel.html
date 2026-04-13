@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Twitch Chat</title>
+    <link rel="stylesheet" href="./sidepanel.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header>
+        <h1>Twitch Chat</h1>
+        <p id="channelLabel"></p>
+      </header>
+      <iframe id="chatFrame" title="Twitch Chat" allow="clipboard-read; clipboard-write"></iframe>
+      <p id="emptyState" class="hidden">No channel selected yet. Open from popup on a mapped YouTube live page.</p>
+    </main>
+    <script type="module" src="./sidepanel.js"></script>
+  </body>
+</html>
