@@ -1,6 +1,7 @@
 import { MESSAGE_TYPES } from "../shared/messages";
 import type { LiveContext } from "../domain/entities/live-context";
 import { APP_CONFIG } from "../shared/app-config";
+import { normalizeYoutubeChannelId } from "../shared/channel-normalizers";
 
 function isYouTubeHost(hostname: string): boolean {
   return APP_CONFIG.youtube.allowedHosts.includes(hostname as (typeof APP_CONFIG.youtube.allowedHosts)[number]);
@@ -42,11 +43,11 @@ function extractYoutubeChannelId(): string | null {
     }
 
     if (href.startsWith("/@")) {
-      return href.slice(2);
+      return normalizeYoutubeChannelId(href);
     }
 
     if (href.startsWith("/channel/")) {
-      return href.slice("/channel/".length);
+      return normalizeYoutubeChannelId(href);
     }
   }
 

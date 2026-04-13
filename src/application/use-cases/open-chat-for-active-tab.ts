@@ -3,6 +3,7 @@ import type { ChatWindowOpener } from "../../domain/contracts/chat-window-opener
 import type { LiveContextProvider } from "../../domain/contracts/live-context-provider";
 import type { Logger } from "../../domain/contracts/logger";
 import type { SessionConfigRepository } from "../../domain/contracts/session-config-repository";
+import { normalizeYoutubeChannelId } from "../../shared/channel-normalizers";
 
 export type OpenChatResult =
   | { ok: true; modeUsed: "tab" | "sidepanel"; twitchChannelName: string }
@@ -37,9 +38,10 @@ export class OpenChatForActiveTabUseCase {
       return { ok: false, reason: "channel-not-identified" };
     }
 
-    const mapping = await this.deps.mappingRepository.getByYoutubeChannelId(context.youtubeChannelId);
+    const normalizedYoutubeChannelId = normalizeYoutubeChannelId(context.youtubeChannelId);
+    const mapping = await this.deps.mappingRepository.getByYoutubeChannelId(normalizedYoutubeChannelId);
     if (!mapping) {
-      this.deps.logger.info("Mapping not found for channel", { youtubeChannelId: context.youtubeChannelId });
+      this.deps.logger.info("Mapping not found for channel", { youtubeChannelId: normalizedYoutubeChannelId });
       return { ok: false, reason: "mapping-not-found" };
     }
 
@@ -52,7 +54,7 @@ export class OpenChatForActiveTabUseCase {
 
     this.deps.logger.info("Twitch chat opened", {
       tabId,
-      youtubeChannelId: context.youtubeChannelId,
+      youtubeChannelId: normalizedYoutubeChannelId,
       twitchChannelName: mapping.twitchChannelName,
       modeUsed
     });

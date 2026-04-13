@@ -1,6 +1,7 @@
 import type { ChannelMappingRepository } from "../../domain/contracts/channel-mapping-repository";
 import type { ChannelMapping } from "../../domain/entities/channel-mapping";
 import { STORAGE_KEYS } from "../../shared/app-config";
+import { normalizeYoutubeChannelId } from "../../shared/channel-normalizers";
 
 type MappingStore = Record<string, ChannelMapping>;
 
@@ -35,14 +36,16 @@ export class ChromeStorageChannelMappingRepository implements ChannelMappingRepo
   }
 
   async getByYoutubeChannelId(youtubeChannelId: string): Promise<ChannelMapping | null> {
+    const normalizedYoutubeChannelId = normalizeYoutubeChannelId(youtubeChannelId);
     const store = await getMappingStore();
-    return store[youtubeChannelId] ?? null;
+    return store[normalizedYoutubeChannelId] ?? null;
   }
 
   async upsert(mapping: Pick<ChannelMapping, "youtubeChannelId" | "twitchChannelName">): Promise<void> {
+    const normalizedYoutubeChannelId = normalizeYoutubeChannelId(mapping.youtubeChannelId);
     const store = await getMappingStore();
-    store[mapping.youtubeChannelId] = {
-      youtubeChannelId: mapping.youtubeChannelId,
+    store[normalizedYoutubeChannelId] = {
+      youtubeChannelId: normalizedYoutubeChannelId,
       twitchChannelName: mapping.twitchChannelName,
       updatedAt: new Date().toISOString()
     };
@@ -50,8 +53,9 @@ export class ChromeStorageChannelMappingRepository implements ChannelMappingRepo
   }
 
   async delete(youtubeChannelId: string): Promise<void> {
+    const normalizedYoutubeChannelId = normalizeYoutubeChannelId(youtubeChannelId);
     const store = await getMappingStore();
-    delete store[youtubeChannelId];
+    delete store[normalizedYoutubeChannelId];
     await setMappingStore(store);
   }
 }
