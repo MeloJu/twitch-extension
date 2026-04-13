@@ -5,7 +5,7 @@ export class SetOpenModeUseCase {
   constructor(private readonly sessionConfigRepository: SessionConfigRepository) {}
 
   async execute(mode: OpenMode): Promise<void> {
-    if (mode !== "tab" && mode !== "sidepanel") {
+    if (mode !== "tab" && mode !== "window" && mode !== "sidepanel") {
       throw new Error("Invalid open mode");
     }
 

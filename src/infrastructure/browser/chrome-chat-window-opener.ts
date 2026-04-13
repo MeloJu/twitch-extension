@@ -20,16 +20,38 @@ async function openInTab(url: string): Promise<void> {
   await chrome.tabs.create({ url });
 }
 
+async function openInWindow(url: string): Promise<boolean> {
+  try {
+    await chrome.windows.create({
+      url,
+      type: "popup",
+      width: 430,
+      height: 760
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function hasSidePanelSupport(): boolean {
+  return typeof chrome.sidePanel !== "undefined";
+}
+
 export class ChromeChatWindowOpener implements ChatWindowOpener {
   async open(params: {
     tabId: number;
     twitchChannelName: string;
     mode: OpenMode;
-  }): Promise<"tab" | "sidepanel"> {
+  }): Promise<"tab" | "window" | "sidepanel"> {
     const twitchChatUrl = buildTwitchPopoutUrl(params.twitchChannelName);
 
     if (params.mode === "sidepanel") {
       try {
+        if (!hasSidePanelSupport()) {
+          throw new Error("Side panel API not supported");
+        }
+
         await setActiveChannel(params.twitchChannelName);
         await chrome.sidePanel.setOptions({
           tabId: params.tabId,
@@ -39,8 +61,30 @@ export class ChromeChatWindowOpener implements ChatWindowOpener {
         await chrome.sidePanel.open({ tabId: params.tabId });
         return "sidepanel";
       } catch {
+        const openedInWindow = await openInWindow(twitchChatUrl);
+        if (openedInWindow) {
+          return "window";
+        }
+
         await openInTab(twitchChatUrl);
         return "tab";
+      }
+    }
+
+    if (params.mode === "window") {
+      const openedInWindow = await openInWindow(twitchChatUrl);
+      if (openedInWindow) {
+        return "window";
+      }
+
+      await openInTab(twitchChatUrl);
+      return "tab";
+    }
+
+    if (!hasSidePanelSupport()) {
+      const openedInWindow = await openInWindow(twitchChatUrl);
+      if (openedInWindow) {
+        return "window";
       }
     }
 

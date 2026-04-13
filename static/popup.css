@@ -1,36 +1,53 @@
 :root {
-  color-scheme: light;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color-scheme: dark;
+  font-family: "Outfit", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
   margin: 0;
-  min-width: 300px;
-  background: linear-gradient(180deg, #f4f8ff 0%, #eef3ff 100%);
+  min-width: 320px;
+  min-height: 210px;
+  background: radial-gradient(circle at 20% 0%, #522ba8 0%, #22113f 45%, #0f0a1f 100%);
 }
 
-.panel {
-  padding: 16px;
+.shell {
+  padding: 14px;
 }
 
-h1 {
-  margin: 0 0 8px;
-  font-size: 18px;
+.card {
+  position: relative;
+  border-radius: 16px;
+  padding: 14px;
+  border: 1px solid rgba(170, 127, 255, 0.35);
+  background: linear-gradient(180deg, rgba(40, 24, 75, 0.95), rgba(23, 14, 45, 0.95));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(201, 177, 255, 0.08);
 }
 
 .status {
   font-size: 13px;
-  margin-bottom: 12px;
-  color: #1f2d3d;
+  line-height: 1.4;
+  margin: 10px 0 12px;
+  color: #ddd3ff;
+  min-height: 36px;
 }
 
 button {
   width: 100%;
   border: 0;
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 10px 12px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 button + button {
@@ -38,11 +55,50 @@ button + button {
 }
 
 .primary {
-  background: #005cc8;
-  color: #fff;
+  background: linear-gradient(180deg, #7f48ff, #6b36f6);
+  color: #f9f5ff;
+  box-shadow: 0 8px 20px rgba(111, 56, 247, 0.45);
 }
 
 .secondary {
-  background: #dce8ff;
-  color: #003a82;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e7dcff;
+  border: 1px solid rgba(193, 165, 255, 0.35);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  color: #f2eaff;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #00e18f;
+  box-shadow: 0 0 14px rgba(0, 225, 143, 0.85);
+}
+
+.badge {
+  margin-left: auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f4ecff;
+  background: rgba(142, 83, 255, 0.35);
+  border: 1px solid rgba(187, 147, 255, 0.45);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
 }

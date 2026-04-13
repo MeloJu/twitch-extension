@@ -6,7 +6,7 @@ import type { SessionConfigRepository } from "../../domain/contracts/session-con
 import { normalizeYoutubeChannelId } from "../../shared/channel-normalizers";
 
 export type OpenChatResult =
-  | { ok: true; modeUsed: "tab" | "sidepanel"; twitchChannelName: string }
+  | { ok: true; modeUsed: "tab" | "window" | "sidepanel"; twitchChannelName: string }
   | { ok: false; reason: "context-unavailable" | "not-live" | "channel-not-identified" | "mapping-not-found" };
 
 interface Dependencies {

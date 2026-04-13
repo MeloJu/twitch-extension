@@ -9,7 +9,7 @@ type PopupStatusResponse = {
 };
 
 type OpenChatResponse =
-  | { ok: true; modeUsed: "tab" | "sidepanel"; twitchChannelName: string }
+  | { ok: true; modeUsed: "tab" | "window" | "sidepanel"; twitchChannelName: string }
   | { ok: false; reason?: string; error?: string };
 
 const statusElement = document.querySelector<HTMLParagraphElement>("#status");

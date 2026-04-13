@@ -34,7 +34,12 @@ async function setSessionConfigRaw(config: SessionConfig): Promise<void> {
 export class ChromeStorageSessionConfigRepository implements SessionConfigRepository {
   async get(): Promise<SessionConfig> {
     const stored = await getSessionConfigRaw();
-    if (!stored || (stored.defaultOpenMode !== "tab" && stored.defaultOpenMode !== "sidepanel")) {
+    if (
+      !stored ||
+      (stored.defaultOpenMode !== "tab" &&
+        stored.defaultOpenMode !== "window" &&
+        stored.defaultOpenMode !== "sidepanel")
+    ) {
       return DEFAULT_SESSION_CONFIG;
     }
 

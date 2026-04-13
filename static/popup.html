@@ -7,11 +7,21 @@
     <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
-    <main class="panel">
-      <h1>YT x Twitch</h1>
-      <p id="status" class="status">Checking active tab...</p>
-      <button id="openChatButton" class="primary" type="button">Open Twitch Chat</button>
-      <button id="openOptionsButton" class="secondary" type="button">Settings</button>
+    <main class="shell">
+      <section class="card">
+        <header class="card-header">
+          <div class="dot"></div>
+          <h1>YT x Twitch</h1>
+          <span class="badge">Bridge</span>
+        </header>
+
+        <p id="status" class="status">Checking active tab...</p>
+
+        <div class="actions">
+          <button id="openChatButton" class="primary" type="button">Open Twitch Chat</button>
+          <button id="openOptionsButton" class="secondary" type="button">Settings</button>
+        </div>
+      </section>
     </main>
     <script type="module" src="./popup.js"></script>
   </body>

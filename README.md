@@ -42,4 +42,9 @@ Notes for Firefox:
 1. Open extension options page and save mapping YouTube channel -> Twitch channel.
 2. Open a YouTube live tab.
 3. Click extension popup and run Open Twitch Chat.
-4. Chat opens in tab or side panel, depending on selected default mode.
+4. Chat opens in window, tab, or side panel, depending on selected default mode.
+
+## Open modes
+- Window: compact popup window (recommended for Firefox).
+- Tab: full-page Twitch popout in a browser tab.
+- Side panel: supported in Chromium-based browsers.

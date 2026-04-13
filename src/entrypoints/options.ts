@@ -112,13 +112,13 @@ async function loadSessionConfig(): Promise<void> {
   if (openModeSelect) {
     const supportsSidePanel = hasSidePanelSupport();
     const desiredMode = response.data.defaultOpenMode;
-    const mode = !supportsSidePanel && desiredMode === "sidepanel" ? "tab" : desiredMode;
+    const mode = !supportsSidePanel && desiredMode === "sidepanel" ? "window" : desiredMode;
 
     openModeSelect.value = mode;
 
     if (mode !== desiredMode) {
       await handleOpenModeChange(mode);
-      setFeedback("Side panel is not supported in this browser. Switched to Tab mode.");
+      setFeedback("Side panel is not supported in this browser. Switched to Window mode.");
     }
   }
 }

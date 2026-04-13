@@ -71,8 +71,8 @@ chrome.runtime.onMessage.addListener((message: unknown, _sender, sendResponse) =
       }
 
       case MESSAGE_TYPES.setOpenMode: {
-        const payload = typedMessage.payload as { mode?: "tab" | "sidepanel" };
-        await container.useCases.setOpenMode.execute(payload.mode ?? "tab");
+        const payload = typedMessage.payload as { mode?: "tab" | "window" | "sidepanel" };
+        await container.useCases.setOpenMode.execute(payload.mode ?? "window");
         sendResponse({ ok: true });
         return;
       }
